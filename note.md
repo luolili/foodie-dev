@@ -14,8 +14,11 @@ pdman:数据库建模tool。
 
 小项目可以有外键。
 
-找不到或无法加载主类 com.luo.Application: maven install
+找不到或无法加载主类 com.luo.Application: maven install,
+每次有了改动，都要 maven install。
 
 @SpringBootApplication(exclude={DataSourceAutoConfiguration.class})：
 卡在信息: Initializing Spring DispatcherServlet 'dispatcherServlet'，
 还是可以访问api.
+
+如果xml 里面有并不存在的类，会报错 sqlSessionFactory.
