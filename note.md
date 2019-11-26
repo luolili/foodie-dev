@@ -13,3 +13,9 @@ pdman:数据库建模tool。
 物理外键/逻辑外键。
 
 小项目可以有外键。
+
+找不到或无法加载主类 com.luo.Application: maven install
+
+@SpringBootApplication(exclude={DataSourceAutoConfiguration.class})：
+卡在信息: Initializing Spring DispatcherServlet 'dispatcherServlet'，
+还是可以访问api.
