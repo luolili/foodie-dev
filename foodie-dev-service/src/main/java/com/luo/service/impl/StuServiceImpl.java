@@ -20,16 +20,19 @@ public class StuServiceImpl implements StuService {
     }
 
     @Override
+    @Transactional//默认 是 required
     public Stu saveStu(Stu stu) {
         return null;
     }
 
     @Override
+    @Transactional
     public Stu updateStu(int id) {
         return null;
     }
 
     @Override
+    @Transactional
     public Stu deleteStu(int id) {
         return null;
     }
