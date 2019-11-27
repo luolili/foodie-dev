@@ -22,3 +22,5 @@ pdman:数据库建模tool。
 还是可以访问api.
 
 如果xml 里面有并不存在的类，会报错 sqlSessionFactory.
+
+bejson.
