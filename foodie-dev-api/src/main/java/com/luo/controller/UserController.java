@@ -2,15 +2,19 @@ package com.luo.controller;
 
 import com.luo.pojo.Users;
 import com.luo.pojo.bo.UserBO;
-import com.luo.service.StuService;
 import com.luo.service.UserService;
+import com.luo.utils.CookieUtils;
 import com.luo.utils.JSONResult;
+import com.luo.utils.JsonUtils;
 import com.luo.utils.MD5Utils;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 @Api(tags = {"注册api"}, value = "注册")
 @RestController
@@ -33,7 +37,7 @@ public class UserController {
 
     @ApiOperation(value = "用户注册", notes = "用户注册n", httpMethod = "POST")
     @PostMapping("/regist")
-    public JSONResult regist(@RequestBody UserBO userBO) {
+    public JSONResult regist(@RequestBody UserBO userBO, HttpServletRequest req, HttpServletResponse resp) {
         String username = userBO.getUsername();
         String password = userBO.getPassword();
         String confirmPassword = userBO.getConfirmPassword();
@@ -54,13 +58,18 @@ public class UserController {
         if (!password.equals(confirmPassword)) {
             return JSONResult.errorMsg("2次密码否一样");
         }
-        userService.createUser(userBO);
+        Users userResult = userService.createUser(userBO);
+
+        setNullProperty(userResult);
+        CookieUtils.setCookie(req, resp, "user",
+                JsonUtils.objectToJson(userResult), true);
+
         return JSONResult.ok(userBO);
     }
 
     @ApiOperation(value = "用户登陆", notes = "用户登陆", httpMethod = "POST")
     @PostMapping("/login")
-    public JSONResult login(@RequestBody UserBO userBO) throws Exception {
+    public JSONResult login(@RequestBody UserBO userBO, HttpServletRequest req, HttpServletResponse resp) throws Exception {
         String username = userBO.getUsername();
         String password = userBO.getPassword();
         //用户名，密码不可谓空
@@ -71,10 +80,21 @@ public class UserController {
         if (userResult == null) {
             return JSONResult.errorMsg("用户名 /密码错误");
         }
+        setNullProperty(userResult);
+        CookieUtils.setCookie(req, resp, "user",
+                JsonUtils.objectToJson(userResult), true);
+
         return JSONResult.ok(userResult);
 
 
     }
 
+    private Users setNullProperty(Users userResult) {
+        userResult.setPassword(null);
+        userResult.setMobile(null);
+        userResult.setEmail(null);
+        userResult.setCreatedTime(null);
+        return userResult;
+    }
 
 }

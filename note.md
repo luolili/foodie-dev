@@ -27,3 +27,5 @@ bejson.
 
 tomcat run 前台项目：把项目放在webapps下面，启动tomcat,
 地址：http:localhost:8080/foodie-shop
+
+cookie:k-v存储，不可跨域，存量最多4k,可过期.
