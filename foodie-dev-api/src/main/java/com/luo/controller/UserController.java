@@ -89,6 +89,16 @@ public class UserController {
 
     }
 
+    @ApiOperation(value = "用户退出登陆", notes = "用户退出登陆", httpMethod = "POST")
+    @PostMapping("/login")
+    public JSONResult logout(@RequestParam String userId, HttpServletRequest req, HttpServletResponse resp) throws Exception {
+        CookieUtils.deleteCookie(req, resp, "user");
+
+        return JSONResult.ok();
+
+
+    }
+
     private Users setNullProperty(Users userResult) {
         userResult.setPassword(null);
         userResult.setMobile(null);

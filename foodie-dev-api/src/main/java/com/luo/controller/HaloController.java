@@ -1,5 +1,7 @@
 package com.luo.controller;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import springfox.documentation.annotations.ApiIgnore;
@@ -10,8 +12,13 @@ import javax.servlet.http.HttpSession;
 @ApiIgnore
 @RestController
 public class HaloController {
+    private static final Logger logger = LoggerFactory.getLogger(HaloController.class);
     @RequestMapping("/halo")
     public Object halo() {
+        logger.debug("d halo-");
+        logger.info("i halo-");
+        logger.warn(" w halo-");
+        logger.error("e halo-");
         return "halo";
     }
 
