@@ -24,3 +24,6 @@ pdman:数据库建模tool。
 如果xml 里面有并不存在的类，会报错 sqlSessionFactory.
 
 bejson.
+
+tomcat run 前台项目：把项目放在webapps下面，启动tomcat,
+地址：http:localhost:8080/foodie-shop

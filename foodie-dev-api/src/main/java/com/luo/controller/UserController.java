@@ -1,19 +1,25 @@
 package com.luo.controller;
 
+import com.luo.pojo.Users;
 import com.luo.pojo.bo.UserBO;
 import com.luo.service.StuService;
 import com.luo.service.UserService;
 import com.luo.utils.JSONResult;
+import com.luo.utils.MD5Utils;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+@Api(tags = {"注册api"}, value = "注册")
 @RestController
 public class UserController {
     @Autowired
     private UserService userService;
 
-    @GetMapping("/usernameExist")
+    @ApiOperation(value = "验证用户名是否存在", notes = "验证用户名是否存在n", httpMethod = "GET")
+    @GetMapping("/usernameIsExist")
     public JSONResult usernameIsExist(@RequestParam String username) {
         if (StringUtils.isBlank(username)) {
             return JSONResult.errorMsg("用户名 不能为空");
@@ -25,6 +31,7 @@ public class UserController {
         return JSONResult.ok();
     }
 
+    @ApiOperation(value = "用户注册", notes = "用户注册n", httpMethod = "POST")
     @PostMapping("/regist")
     public JSONResult regist(@RequestBody UserBO userBO) {
         String username = userBO.getUsername();
@@ -44,12 +51,29 @@ public class UserController {
             return JSONResult.errorMsg("密码长度 小于6");
         }
         //2次密码是否一样
-
         if (!password.equals(confirmPassword)) {
             return JSONResult.errorMsg("2次密码否一样");
         }
         userService.createUser(userBO);
         return JSONResult.ok(userBO);
+    }
+
+    @ApiOperation(value = "用户登陆", notes = "用户登陆", httpMethod = "POST")
+    @PostMapping("/login")
+    public JSONResult login(@RequestBody UserBO userBO) throws Exception {
+        String username = userBO.getUsername();
+        String password = userBO.getPassword();
+        //用户名，密码不可谓空
+        if (StringUtils.isBlank(username) || StringUtils.isBlank(password)) {
+            return JSONResult.errorMsg("用户名 /密码不能为空");
+        }
+        Users userResult = userService.queryUserForLogin(username, MD5Utils.getMD5Str(password));
+        if (userResult == null) {
+            return JSONResult.errorMsg("用户名 /密码错误");
+        }
+        return JSONResult.ok(userResult);
+
+
     }
 
 
