@@ -35,7 +35,7 @@ spring:
 mybatis:
   type-aliases-package: com.luo.pojo          # 所有POJO类所在包路径
   mapper-locations: classpath:mapper/*.xml      # mapper映射文件
-  # 只在测试/开发环境 打印 sql
+  # 只在单机，测试/开发环境 打印 sql,
 #  configuration:
 #    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
 
