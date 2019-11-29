@@ -90,7 +90,7 @@ public class UserController {
     }
 
     @ApiOperation(value = "用户退出登陆", notes = "用户退出登陆", httpMethod = "POST")
-    @PostMapping("/login")
+    @PostMapping("/logout")
     public JSONResult logout(@RequestParam String userId, HttpServletRequest req, HttpServletResponse resp) throws Exception {
         CookieUtils.deleteCookie(req, resp, "user");
 

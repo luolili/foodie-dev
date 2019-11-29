@@ -3,15 +3,18 @@ package com.luo.controller;
 import com.luo.enums.YesOrNo;
 import com.luo.pojo.Carousel;
 import com.luo.pojo.Category;
+import com.luo.pojo.vo.CategoryVO;
 import com.luo.service.CarouseService;
 import com.luo.service.CategoryService;
 import com.luo.utils.JSONResult;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import springfox.documentation.annotations.ApiIgnore;
@@ -45,5 +48,13 @@ public class IndexController {
         return JSONResult.ok(categoryList);
     }
 
-
+    @ApiOperation(value = "获取分类孩子", notes = "获取分类孩子", httpMethod = "GET")
+    @GetMapping("/subCat/{rootCatId}")
+    public JSONResult subCat(@ApiParam(name = "rootCatId", value = "一级分类id", required = true) @PathVariable Integer rootCatId) {
+        if (rootCatId == null) {
+            return JSONResult.errorMsg("");
+        }
+        List<CategoryVO> list = categoryService.getSubCatList(rootCatId);
+        return JSONResult.ok(list);
+    }
 }
