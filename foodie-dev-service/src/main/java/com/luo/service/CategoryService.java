@@ -11,4 +11,6 @@ public interface CategoryService {
 
     List<CategoryVO> getSubCatList(Integer rootCatId);
 
+    List getSixNewItemsLazy(Integer rootCatId);
+
 }

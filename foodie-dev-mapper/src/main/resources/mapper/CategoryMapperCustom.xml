@@ -41,9 +41,9 @@
     WHERE
         f.father_id = #{rootCatId}
   </select>
-    <!--
 
-        <resultMap id="myNewItemsVO" type="com.luo.pojo.vo.NewItemsVO">
+
+    <resultMap id="myNewItemsVO" type="com.luo.pojo.vo.NewItemsVO">
             <id column="rootCatId" property="rootCatId"/>
             <result column="rootCatName" property="rootCatName"/>
             <result column="slogan" property="slogan"/>
@@ -83,7 +83,6 @@
             DESC
             LIMIT 0,6
         </select>
-    -->
 
 
 </mapper>

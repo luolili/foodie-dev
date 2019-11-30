@@ -93,10 +93,7 @@ public class UserController {
     @PostMapping("/logout")
     public JSONResult logout(@RequestParam String userId, HttpServletRequest req, HttpServletResponse resp) throws Exception {
         CookieUtils.deleteCookie(req, resp, "user");
-
         return JSONResult.ok();
-
-
     }
 
     private Users setNullProperty(Users userResult) {
